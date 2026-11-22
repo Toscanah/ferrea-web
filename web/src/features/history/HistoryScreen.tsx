@@ -2,7 +2,7 @@ import { useEffect, useState } from 'preact/hooks'
 import { allExercises, setsInRange } from '../../data/repository'
 import { useDataVersion } from '../../data/events'
 import type { Exercise, ExerciseSet } from '../../domain/model/types'
-import { formatCount } from '../../domain/formatter/formatter'
+import { count, t } from '../../domain/i18n/strings'
 import { addDays, formatDayTitle, formatSetChip, fromDateInputValue, startOfDay, toDateInputValue, useNow } from '../../ui/util'
 import { EditSetSheet } from './EditSetSheet'
 
@@ -49,10 +49,10 @@ export function HistoryScreen() {
 
   return (
     <div class="screen">
-      <h1 class="title">History</h1>
+      <h1 class="title">{t('history')}</h1>
 
       <div class="day-bar">
-        <button class="icon-button big" aria-label="Previous day" onClick={() => setDay(addDays(day, -1))}>
+        <button class="icon-button big" aria-label={t('previousDay')} onClick={() => setDay(addDays(day, -1))}>
           ‹
         </button>
         <label class="day-pick">
@@ -67,30 +67,30 @@ export function HistoryScreen() {
             }}
           />
         </label>
-        <button class="icon-button big" aria-label="Next day" disabled={isToday} onClick={() => setDay(Math.min(addDays(day, 1), today))}>
+        <button class="icon-button big" aria-label={t('nextDay')} disabled={isToday} onClick={() => setDay(Math.min(addDays(day, 1), today))}>
           ›
         </button>
       </div>
 
       {!isToday ? (
         <button class="link-button center" onClick={() => setDay(today)}>
-          Jump to today
+          {t('jumpToToday')}
         </button>
       ) : null}
 
       {groups.length === 0 ? (
         <div class="empty">
-          <strong>No sets recorded</strong>
-          <p>No workout sets logged for this date.</p>
+          <strong>{t('noSetsRecorded')}</strong>
+          <p>{t('noSetsForDate')}</p>
         </div>
       ) : (
         <>
           <p class="sub">
-            {formatCount(groups.length, 'exercise')} · {formatCount(totalSets, 'set')}
+            {count(groups.length, 'exercise')} · {count(totalSets, 'set')}
           </p>
           {groups.map((g) => (
             <section class="card" key={g.exerciseId}>
-              <h3 class="card-title">{g.exercise ? g.exercise.name : 'Removed exercise'}</h3>
+              <h3 class="card-title">{g.exercise ? g.exercise.name : t('removedExercise')}</h3>
               <div class="chips">
                 {g.sets.map((s) => (
                   <button

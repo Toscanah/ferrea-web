@@ -1,7 +1,7 @@
 import { useRef, useState } from 'preact/hooks'
 import { allExercises, allSets, replaceAll } from '../../data/repository'
 import { backupFileName, buildBackup, parseBackup } from '../../data/backup'
-import { formatCount } from '../../domain/formatter/formatter'
+import { count, t } from '../../domain/i18n/strings'
 import { showToast } from '../../ui/toast'
 
 /** Backup: export and import are the only way to keep or move the data, so they are the whole screen. */
@@ -33,9 +33,9 @@ export function MoreScreen() {
         link.click()
         setTimeout(() => URL.revokeObjectURL(url), 10_000)
       }
-      showToast('Backup completed')
+      showToast(t('backupCompleted'))
     } catch {
-      showToast('Export error')
+      showToast(t('exportError'))
     } finally {
       setBusy(false)
     }
@@ -49,25 +49,25 @@ export function MoreScreen() {
       if (!result.ok) {
         showToast(
           result.reason === 'tooNew'
-            ? 'This backup was created by a newer version of Ferrea'
+            ? t('importTooNew')
             : result.reason === 'noExercises'
-              ? 'Import error: no exercises found'
-              : 'Import error: invalid format',
+              ? t('importNoExercises')
+              : t('importInvalid'),
         )
         return
       }
       const ok = window.confirm(
-        `Replace all logged sets with the ${formatCount(result.sets.length, 'set')} in this file?`,
+        t('confirmReplace', { sets: count(result.sets.length, 'set') }),
       )
       if (!ok) return
       await replaceAll(result.exercises, result.sets)
       showToast(
         result.skippedSets > 0
-          ? `Import completed: ${formatCount(result.sets.length, 'set')}, ${result.skippedSets} skipped`
-          : `Import completed: ${formatCount(result.sets.length, 'set')}`,
+          ? t('importCompletedSkipped', { sets: count(result.sets.length, 'set'), skipped: result.skippedSets })
+          : t('importCompleted', { sets: count(result.sets.length, 'set') }),
       )
     } catch {
-      showToast('Import error: invalid format')
+      showToast(t('importInvalid'))
     } finally {
       setBusy(false)
       if (fileInput.current) fileInput.current.value = ''
@@ -76,22 +76,21 @@ export function MoreScreen() {
 
   return (
     <div class="screen">
-      <h1 class="title">Backup</h1>
+      <h1 class="title">{t('backup')}</h1>
 
       <p class="sub">
-        Backup files hold your exercises and sets. Weights are saved in kg. Sets are stored on this device only, and
-        removing the app from the home screen deletes them.
+        {t('backupIntro')}
       </p>
 
-      <h2 class="section-title">Your data</h2>
+      <h2 class="section-title">{t('yourData')}</h2>
       <div class="stack">
         <button class="setting" disabled={busy} onClick={() => void exportData()}>
-          <span class="setting-title">Export data</span>
-          <span class="setting-desc">Saves a backup file to your device.</span>
+          <span class="setting-title">{t('exportData')}</span>
+          <span class="setting-desc">{t('exportDesc')}</span>
         </button>
         <button class="setting" disabled={busy} onClick={() => fileInput.current?.click()}>
-          <span class="setting-title">Import data</span>
-          <span class="setting-desc">Replaces all logged sets with the ones in the file.</span>
+          <span class="setting-title">{t('importData')}</span>
+          <span class="setting-desc">{t('importDesc')}</span>
         </button>
       </div>
       <input

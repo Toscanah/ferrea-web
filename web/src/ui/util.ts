@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 import { formatSetCompact } from '../domain/formatter/formatter'
+import { t } from '../domain/i18n/strings'
 import type { ExerciseSet } from '../domain/model/types'
 
 /** The current time, refreshed every [everyMs]. */
@@ -39,13 +40,13 @@ export function fromDateInputValue(value: string): number | null {
 }
 
 export function formatDayTitle(dayStart: number, today: number): string {
-  if (dayStart === today) return 'Today'
-  if (dayStart === addDays(today, -1)) return 'Yesterday'
-  return new Date(dayStart).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })
+  if (dayStart === today) return t('today')
+  if (dayStart === addDays(today, -1)) return t('yesterday')
+  return new Date(dayStart).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })
 }
 
 export const formatClock = (timestamp: number): string =>
-  new Date(timestamp).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+  new Date(timestamp).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
 
 /** "80kg × 8", "12 reps", or "45s" for a hold imported from the Android app. */
 export function formatSetChip(set: Pick<ExerciseSet, 'weight' | 'reps' | 'durationSeconds'>): string {
@@ -55,10 +56,10 @@ export function formatSetChip(set: Pick<ExerciseSet, 'weight' | 'reps' | 'durati
 
 /** Parses "82.5" or "82,5". Blank is 0, anything else that is not a number is null. */
 export function parseDecimal(text: string): number | null {
-  const t = text.trim().replace(',', '.')
-  if (t === '') return 0
-  if (!/^\d*\.?\d*$/.test(t) || t === '.') return null
-  const n = Number(t)
+  const cleaned = text.trim().replace(',', '.')
+  if (cleaned === '') return 0
+  if (!/^\d*\.?\d*$/.test(cleaned) || cleaned === '.') return null
+  const n = Number(cleaned)
   return Number.isFinite(n) ? n : null
 }
 

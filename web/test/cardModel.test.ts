@@ -1,12 +1,12 @@
-import { describe, expect, it } from 'vitest'
-import { defaultExercises } from '../src/data/db'
+import { beforeAll, describe, expect, it } from 'vitest'
+import { setLocale } from '../src/domain/i18n/strings'
+import { bench, pushUp } from './fixtures'
 import { buildCardModel, prefillFor } from '../src/domain/mappers/cardModel'
 import type { Exercise, ExerciseSet } from '../src/domain/model/types'
 import { DAY_MS, MINUTE_MS } from '../src/domain/progression/engineDefaults'
 import { progressionFor } from '../src/domain/progression/exerciseProgression'
 
-const bench = defaultExercises().find((e) => e.name === 'Barbell Bench Press') as Exercise
-const pushUp = defaultExercises().find((e) => e.name === 'Bodyweight Push-Up') as Exercise
+beforeAll(() => setLocale('en')) // the expectations are the Android app's English texts
 const t0 = 1_700_000_000_000
 
 let id = 0

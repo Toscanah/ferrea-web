@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks'
 import { HistoryScreen } from './features/history/HistoryScreen'
 import { LogScreen } from './features/log/LogScreen'
 import { MoreScreen } from './features/more/MoreScreen'
+import { t, type StringKey } from './domain/i18n/strings'
 import { ToastHost } from './ui/toast'
 
 type Tab = 'log' | 'history' | 'more'
@@ -27,10 +28,10 @@ const ICONS: Record<Tab, JSX.Element> = {
   ),
 }
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: 'log', label: 'Log' },
-  { id: 'history', label: 'History' },
-  { id: 'more', label: 'Backup' },
+const TABS: { id: Tab; label: StringKey }[] = [
+  { id: 'log', label: 'tabLog' },
+  { id: 'history', label: 'tabHistory' },
+  { id: 'more', label: 'tabBackup' },
 ]
 
 /** Three tabs. Every screen stays mounted, so switching never loses what was half typed. */
@@ -50,15 +51,15 @@ export function App() {
         </div>
       </main>
       <nav class="tabbar" aria-label="Main">
-        {TABS.map((t) => (
+        {TABS.map((item) => (
           <button
-            key={t.id}
-            class={tab === t.id ? 'tab active' : 'tab'}
-            aria-current={tab === t.id ? 'page' : undefined}
-            onClick={() => setTab(t.id)}
+            key={item.id}
+            class={tab === item.id ? 'tab active' : 'tab'}
+            aria-current={tab === item.id ? 'page' : undefined}
+            onClick={() => setTab(item.id)}
           >
-            {ICONS[t.id]}
-            <span>{t.label}</span>
+            {ICONS[item.id]}
+            <span>{t(item.label)}</span>
           </button>
         ))}
       </nav>

@@ -10,46 +10,6 @@
   "equipment": "MACHINE"
  },
  {
-  "id": "2",
-  "name": "Dumbbell Incline Chest Press",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "32",
-  "name": "Barbell Bench Press",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "BARBELL"
- },
- {
-  "id": "3",
-  "name": "Machine Chest Fly",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "MACHINE"
- },
- {
-  "id": "30",
-  "name": "Machine Chest Press",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "MACHINE"
- },
- {
   "id": "4",
   "name": "Wide-Grip Lat Pulldown",
   "preferredTargetReps": 10,
@@ -60,24 +20,14 @@
   "equipment": "MACHINE"
  },
  {
-  "id": "5",
-  "name": "Cable Wide-Grip Row",
+  "id": "2",
+  "name": "Dumbbell Incline Chest Press",
   "preferredTargetReps": 10,
   "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "BACK",
-  "equipment": "CABLE"
- },
- {
-  "id": "6",
-  "name": "Close-Grip Lat Pulldown",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
+  "weightStepKg": 2.0,
   "weightStepLb": 5.0,
-  "category": "BACK",
-  "equipment": "MACHINE"
+  "category": "CHEST",
+  "equipment": "DUMBBELL"
  },
  {
   "id": "7",
@@ -90,28 +40,38 @@
   "equipment": "CABLE"
  },
  {
-  "id": "8",
-  "name": "Dumbbell Shrug",
-  "preferredTargetReps": 12,
+  "id": "11",
+  "name": "Dumbbell Lateral Raise",
+  "preferredTargetReps": 15,
   "plannedSets": 3,
   "weightStepKg": 2.0,
   "weightStepLb": 5.0,
-  "category": "BACK",
+  "category": "SHOULDERS",
   "equipment": "DUMBBELL"
  },
  {
-  "id": "12",
-  "name": "Machine Reverse Fly",
+  "id": "55",
+  "name": "Cable Curl",
   "preferredTargetReps": 12,
   "plannedSets": 3,
   "weightStepKg": 5.0,
+  "weightStepLb": 10.0,
+  "category": "ARMS",
+  "equipment": "CABLE"
+ },
+ {
+  "id": "58",
+  "name": "Machine Hack Squat",
+  "preferredTargetReps": 10,
+  "plannedSets": 3,
+  "weightStepKg": 5.0,
   "weightStepLb": 5.0,
-  "category": "SHOULDERS",
+  "category": "LEGS",
   "equipment": "MACHINE"
  },
  {
-  "id": "17",
-  "name": "Barbell Squat",
+  "id": "24",
+  "name": "Barbell Hip Thrust",
   "preferredTargetReps": 8,
   "plannedSets": 3,
   "weightStepKg": 2.5,
@@ -128,146 +88,6 @@
   "weightStepLb": 5.0,
   "category": "LEGS",
   "equipment": "BARBELL"
- },
- {
-  "id": "19",
-  "name": "Machine Leg Press",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "MACHINE"
- },
- {
-  "id": "20",
-  "name": "Machine Leg Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "MACHINE"
- },
- {
-  "id": "21",
-  "name": "Machine Calf Raise",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "MACHINE"
- },
- {
-  "id": "22",
-  "name": "Machine Leg Extension",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "MACHINE"
- },
- {
-  "id": "23",
-  "name": "Dumbbell Bulgarian Split Squat",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "24",
-  "name": "Barbell Hip Thrust",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "BARBELL"
- },
- {
-  "id": "9",
-  "name": "Barbell Overhead Press",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "SHOULDERS",
-  "equipment": "BARBELL"
- },
- {
-  "id": "10",
-  "name": "Dumbbell Shoulder Press",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "SHOULDERS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "11",
-  "name": "Dumbbell Lateral Raise",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "SHOULDERS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "13",
-  "name": "Cable Overhead Triceps Extension",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "ARMS",
-  "equipment": "CABLE"
- },
- {
-  "id": "14",
-  "name": "Cable Triceps Pushdown",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "ARMS",
-  "equipment": "CABLE"
- },
- {
-  "id": "27",
-  "name": "Cable Bayesian Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "ARMS",
-  "equipment": "CABLE"
- },
- {
-  "id": "16",
-  "name": "Dumbbell Hammer Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "28",
-  "name": "Dumbbell Biceps Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "DUMBBELL"
  },
  {
   "id": "25",
@@ -292,162 +112,6 @@
   "equipment": "BODYWEIGHT"
  },
  {
-  "id": "33",
-  "name": "EZ Bar Skull Crusher",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "EZ_BAR"
- },
- {
-  "id": "37",
-  "name": "Barbell Incline Bench Press",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "BARBELL"
- },
- {
-  "id": "38",
-  "name": "Dumbbell Wrist Curl",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "39",
-  "name": "Dumbbell Reverse Wrist Curl",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "40",
-  "name": "EZ Bar Reverse Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "EZ_BAR"
- },
- {
-  "id": "41",
-  "name": "EZ Bar Preacher Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "EZ_BAR"
- },
- {
-  "id": "42",
-  "name": "Dumbbell Incline Biceps Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "43",
-  "name": "Dumbbell Bench Press",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "44",
-  "name": "Cable Chest Fly",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "CHEST",
-  "equipment": "CABLE"
- },
- {
-  "id": "45",
-  "name": "Bodyweight Push-Up",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 0.0,
-  "weightStepLb": 0.0,
-  "category": "CHEST",
-  "equipment": "BODYWEIGHT",
-  "progressionMode": "REPS_ONLY",
-  "repsCeiling": 20
- },
- {
-  "id": "46",
-  "name": "Bodyweight Dip",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 0.0,
-  "weightStepLb": 0.0,
-  "category": "CHEST",
-  "equipment": "BODYWEIGHT",
-  "progressionMode": "REPS_ONLY",
-  "repsCeiling": 20
- },
- {
-  "id": "47",
-  "name": "Barbell Deadlift",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "BACK",
-  "equipment": "BARBELL"
- },
- {
-  "id": "48",
-  "name": "Barbell Row",
-  "preferredTargetReps": 8,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "BACK",
-  "equipment": "BARBELL"
- },
- {
-  "id": "49",
-  "name": "Dumbbell Row",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 2.0,
-  "weightStepLb": 5.0,
-  "category": "BACK",
-  "equipment": "DUMBBELL"
- },
- {
-  "id": "50",
-  "name": "Bodyweight Pull-Up",
-  "preferredTargetReps": 6,
-  "plannedSets": 3,
-  "weightStepKg": 0.0,
-  "weightStepLb": 0.0,
-  "category": "BACK",
-  "equipment": "BODYWEIGHT",
-  "progressionMode": "REPS_ONLY",
-  "repsCeiling": 20
- },
- {
   "id": "51",
   "name": "Cable Face Pull",
   "preferredTargetReps": 15,
@@ -468,28 +132,8 @@
   "equipment": "MACHINE"
  },
  {
-  "id": "53",
-  "name": "Cable Lateral Raise",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "SHOULDERS",
-  "equipment": "CABLE"
- },
- {
-  "id": "54",
-  "name": "Barbell Curl",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 2.5,
-  "weightStepLb": 5.0,
-  "category": "ARMS",
-  "equipment": "BARBELL"
- },
- {
-  "id": "55",
-  "name": "Cable Curl",
+  "id": "14",
+  "name": "Cable Triceps Pushdown",
   "preferredTargetReps": 12,
   "plannedSets": 3,
   "weightStepKg": 5.0,
@@ -498,28 +142,28 @@
   "equipment": "CABLE"
  },
  {
-  "id": "56",
-  "name": "Smith Machine Squat",
-  "preferredTargetReps": 8,
+  "id": "28",
+  "name": "Dumbbell Biceps Curl",
+  "preferredTargetReps": 12,
   "plannedSets": 3,
-  "weightStepKg": 2.5,
+  "weightStepKg": 2.0,
   "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "SMITH_MACHINE"
+  "category": "ARMS",
+  "equipment": "DUMBBELL"
  },
  {
-  "id": "57",
-  "name": "Smith Machine Bench Press",
-  "preferredTargetReps": 8,
+  "id": "16",
+  "name": "Dumbbell Hammer Curl",
+  "preferredTargetReps": 12,
   "plannedSets": 3,
-  "weightStepKg": 2.5,
+  "weightStepKg": 2.0,
   "weightStepLb": 5.0,
-  "category": "CHEST",
-  "equipment": "SMITH_MACHINE"
+  "category": "ARMS",
+  "equipment": "DUMBBELL"
  },
  {
-  "id": "58",
-  "name": "Machine Hack Squat",
+  "id": "19",
+  "name": "Machine Leg Press",
   "preferredTargetReps": 10,
   "plannedSets": 3,
   "weightStepKg": 5.0,
@@ -528,8 +172,8 @@
   "equipment": "MACHINE"
  },
  {
-  "id": "59",
-  "name": "Dumbbell Goblet Squat",
+  "id": "23",
+  "name": "Dumbbell Bulgarian Split Squat",
   "preferredTargetReps": 10,
   "plannedSets": 3,
   "weightStepKg": 2.0,
@@ -538,99 +182,43 @@
   "equipment": "DUMBBELL"
  },
  {
-  "id": "60",
-  "name": "Dumbbell Lunge",
-  "preferredTargetReps": 10,
+  "id": "20",
+  "name": "Machine Leg Curl",
+  "preferredTargetReps": 12,
+  "plannedSets": 3,
+  "weightStepKg": 5.0,
+  "weightStepLb": 5.0,
+  "category": "LEGS",
+  "equipment": "MACHINE"
+ },
+ {
+  "id": "22",
+  "name": "Machine Leg Extension",
+  "preferredTargetReps": 12,
+  "plannedSets": 3,
+  "weightStepKg": 5.0,
+  "weightStepLb": 5.0,
+  "category": "LEGS",
+  "equipment": "MACHINE"
+ },
+ {
+  "id": "web_dumbbell_overhead_triceps_extension",
+  "name": "Dumbbell Overhead Triceps Extension",
+  "preferredTargetReps": 12,
   "plannedSets": 3,
   "weightStepKg": 2.0,
   "weightStepLb": 5.0,
-  "category": "LEGS",
+  "category": "ARMS",
   "equipment": "DUMBBELL"
  },
  {
-  "id": "61",
-  "name": "Machine Hip Abductor",
+  "id": "web_cable_glute_kickback",
+  "name": "Cable Glute Kickback",
   "preferredTargetReps": 12,
   "plannedSets": 3,
-  "weightStepKg": 5.0,
+  "weightStepKg": 2.5,
   "weightStepLb": 5.0,
   "category": "LEGS",
-  "equipment": "MACHINE"
- },
- {
-  "id": "62",
-  "name": "Machine Hip Adductor",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 5.0,
-  "category": "LEGS",
-  "equipment": "MACHINE"
- },
- {
-  "id": "63",
-  "name": "Bodyweight Crunch",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 0.0,
-  "weightStepLb": 0.0,
-  "category": "CORE",
-  "equipment": "BODYWEIGHT",
-  "progressionMode": "REPS_ONLY",
-  "repsCeiling": 20
- },
- {
-  "id": "64",
-  "name": "Bodyweight Hanging Leg Raise",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 0.0,
-  "weightStepLb": 0.0,
-  "category": "CORE",
-  "equipment": "BODYWEIGHT",
-  "progressionMode": "REPS_ONLY",
-  "repsCeiling": 20
- },
- {
-  "id": "65",
-  "name": "Cable Woodchopper",
-  "preferredTargetReps": 12,
-  "plannedSets": 3,
-  "weightStepKg": 5.0,
-  "weightStepLb": 10.0,
-  "category": "CORE",
   "equipment": "CABLE"
- },
- {
-  "id": "66",
-  "name": "Kettlebell Swing",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 4.0,
-  "weightStepLb": 10.0,
-  "category": "LEGS",
-  "equipment": "KETTLEBELL"
- },
- {
-  "id": "67",
-  "name": "Kettlebell Goblet Squat",
-  "preferredTargetReps": 10,
-  "plannedSets": 3,
-  "weightStepKg": 4.0,
-  "weightStepLb": 10.0,
-  "category": "LEGS",
-  "equipment": "KETTLEBELL"
- },
- {
-  "id": "68",
-  "name": "Resistance Band Pull-Apart",
-  "preferredTargetReps": 15,
-  "plannedSets": 3,
-  "weightStepKg": 0.0,
-  "weightStepLb": 0.0,
-  "category": "SHOULDERS",
-  "equipment": "RESISTANCE_BAND",
-  "progressionMode": "REPS_ONLY",
-  "repsCeiling": 20
  }
 ]

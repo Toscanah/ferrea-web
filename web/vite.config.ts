@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'Ferrea',
         short_name: 'Ferrea',
-        description: 'A simple gym log that shows your next target.',
+        description: 'Un semplice diario di allenamento che mostra il tuo prossimo obiettivo.',
         start_url: './',
         scope: './',
         display: 'standalone',

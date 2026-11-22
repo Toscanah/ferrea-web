@@ -36,10 +36,19 @@ The progression logic in `web/src/domain` is a port of the Kotlin engines. Files
 
 ## Tone and strings
 
-Same as Android (section 2 of `docs/ai_instructions.md`): neutral, short, factual, sentence case, no
-exclamation marks, no emoji, final periods on supporting text only. Reuse the Android wording 1 to 1 wherever a
-string exists ("Log a set", "Select an exercise", "Export data", "Import completed: 3 sets"). Colors are the
-neutral greyscale in `styles.css`; the only hue is the warm-up orange. English only.
+Same tone as Android (section 2 of `docs/ai_instructions.md`): neutral, short, factual, sentence case, no
+exclamation marks, no emoji, final periods on supporting text only. The web app speaks Italian (its user is
+Italian); exercise names stay in English. Every string lives in `src/domain/i18n/strings.ts`, an English and an
+Italian dictionary with `{placeholders}` and plural forms; the English one is the Android wording 1 to 1, and the
+parity and card tests switch to it with `setLocale('en')`. Never write a user-facing string inline. Dates use
+`it-IT`. Colors are the neutral greyscale in `styles.css`; the only hue is the warm-up orange.
+
+## Exercises
+
+The bundled list (`src/data/defaultExercises.json`) is only the friend's fixed schedule (22 exercises, taken from
+Android's defaults by id, plus two web-only ids), not Android's full list. `SEED_VERSION` in `db.ts` is 2: when it
+rises, missing ones are added and old numeric-id defaults that are not in the list are removed only if unedited
+and without sets. Her own additions (`u...` ids) are never touched.
 
 ## Hosting and iOS limits
 

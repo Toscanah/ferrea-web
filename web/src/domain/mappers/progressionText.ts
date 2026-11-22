@@ -1,3 +1,4 @@
+import { t, tn } from '../i18n/strings'
 import type { ProgressionSuggestion } from '../model/types'
 import {
   formatMilestoneCleared,
@@ -6,10 +7,10 @@ import {
   formatTargetInstruction,
 } from '../formatter/formatter'
 
-export const LIGHTER_SESSION_NOTE = 'Last session was lighter, target kept'
+export const lighterSessionNote = (): string => t('lighterNote')
 
 const withLighterSessionNote = (message: string, skipped: boolean): string =>
-  skipped ? `${message} · ${LIGHTER_SESSION_NOTE}` : message
+  skipped ? `${message} · ${lighterSessionNote()}` : message
 
 /**
  * Status label and body line for a suggestion (port of toDisplayMessage in ProgressionCategoryMapper.kt).
@@ -21,11 +22,11 @@ export function toDisplayMessage(
 ): [label: string, message: string] {
   switch (suggestion.type) {
     case 'StartTracking':
-      return ['FIRST SESSION', `Target: any weight × ${suggestion.targetReps}`]
+      return [t('firstSession'), t('targetAnyWeight', { n: suggestion.targetReps })]
 
     case 'OverloadReady':
       return [
-        'NEW TARGET',
+        t('newTarget'),
         withLighterSessionNote(
           formatTargetInstruction(suggestion.targetReps, suggestion.nextWeight),
           suggestion.lighterSessionSkipped,
@@ -35,7 +36,7 @@ export function toDisplayMessage(
     case 'GoalReached': {
       const cleared = formatMilestoneCleared(suggestion.weight, suggestion.targetReps, suggestion.nextWeight)
       const remaining = suggestion.targetReps - repsAtNextWeight
-      return ['GOAL REACHED', repsAtNextWeight > 0 && remaining > 0 ? `${cleared} (${remaining} remaining)` : cleared]
+      return [t('goalReached'), repsAtNextWeight > 0 && remaining > 0 ? `${cleared} (${tn('remaining', remaining)})` : cleared]
     }
 
     case 'BuildVolume': {
@@ -43,36 +44,36 @@ export function toDisplayMessage(
       let message: string
       switch (r.type) {
         case 'Overshoot':
-          message = `Heavier weight kept · ${formatTargetInstruction(r.targetReps, r.nextWeight)}`
+          message = `${t('heavierKept')} · ${formatTargetInstruction(r.targetReps, r.nextWeight)}`
           break
         case 'RepsRemaining':
           message =
-            `Best: ${formatSetCompact(r.weight, r.targetReps - r.repsLeft)} · ` +
-            `Target: ${formatReps(r.targetReps)} (${r.repsLeft} remaining)`
+            `${t('best')}: ${formatSetCompact(r.weight, r.targetReps - r.repsLeft)} · ` +
+            `${t('target')}: ${formatReps(r.targetReps)} (${tn('remaining', r.repsLeft)})`
           break
         case 'ShortOnReps':
-          message = `${formatReps(r.repsShort)} short of last session · ${formatTargetInstruction(r.targetReps, r.nextWeight)}`
+          message = `${t('shortOfLast', { reps: formatReps(r.repsShort) })} · ${formatTargetInstruction(r.targetReps, r.nextWeight)}`
           break
         case 'StandardTarget':
           message = formatTargetInstruction(r.targetReps, r.nextWeight)
           break
       }
-      return ['SAME TARGET', withLighterSessionNote(message, suggestion.lighterSessionSkipped)]
+      return [t('sameTarget'), withLighterSessionNote(message, suggestion.lighterSessionSkipped)]
     }
 
     case 'SingleMetric': {
       const r = suggestion.reason
       switch (r.type) {
         case 'FirstSession':
-          return ['FIRST SESSION', 'Target: as many as you can']
+          return [t('firstSession'), t('targetAsMany')]
         case 'Target':
-          return [r.held ? 'SAME TARGET' : 'NEW TARGET', `Best: ${formatReps(r.lastBest)} · Target: ${formatReps(r.target)}`]
+          return [r.held ? t('sameTarget') : t('newTarget'), `${t('best')}: ${formatReps(r.lastBest)} · ${t('target')}: ${formatReps(r.target)}`]
         case 'Remaining':
-          return ['SAME TARGET', `Target: ${formatReps(r.target)} (${r.repsLeft} remaining)`]
+          return [t('sameTarget'), `${t('target')}: ${formatReps(r.target)} (${tn('remaining', r.repsLeft)})`]
         case 'GoalReached':
-          return ['GOAL REACHED', `Cleared ${formatReps(r.cleared)} · Next ${formatReps(r.nextTarget)}`]
+          return [t('goalReached'), `${t('cleared')} ${formatReps(r.cleared)} · ${t('next')} ${formatReps(r.nextTarget)}`]
         case 'AtCeiling':
-          return ['AT CEILING', `Target stays at ${formatReps(r.ceiling)}`]
+          return [t('atCeiling'), t('targetStays', { reps: formatReps(r.ceiling) })]
       }
     }
   }

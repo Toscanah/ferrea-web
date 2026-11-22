@@ -5,6 +5,7 @@ import {
   formatReps,
   formatSetCompact,
 } from '../formatter/formatter'
+import { t } from '../i18n/strings'
 import { formatWeight } from '../progression/math'
 import { toDisplayMessage } from './progressionText'
 
@@ -31,20 +32,20 @@ type DashboardState = 'CALIBRATION' | 'IN_PROGRESS_NOT_REACHED' | 'IN_PROGRESS_R
 
 const centerLabel = (state: DashboardState, targetAheadOfToday: boolean): string => {
   switch (state) {
-    case 'CALIBRATION': return 'TARGET'
-    case 'IN_PROGRESS_NOT_REACHED': return targetAheadOfToday ? 'NEXT' : 'TARGET'
-    case 'IN_PROGRESS_REACHED': return 'NEXT'
-    default: return 'NEXT SESSION'
+    case 'CALIBRATION': return t('tag_target')
+    case 'IN_PROGRESS_NOT_REACHED': return targetAheadOfToday ? t('tag_next') : t('tag_target')
+    case 'IN_PROGRESS_REACHED': return t('tag_next')
+    default: return t('tag_nextSession')
   }
 }
 
 const captionFor = (state: DashboardState, targetAheadOfToday: boolean, lighterSessionSkipped: boolean): string | null => {
   switch (state) {
-    case 'CALIBRATION': return lighterSessionSkipped ? 'Last session was lighter, so the target stays.' : null
-    case 'IN_PROGRESS_NOT_REACHED': return targetAheadOfToday ? "Lighter sets don't change your target." : null
-    case 'IN_PROGRESS_REACHED': return 'Target cleared. Advance, repeat, or back-off.'
-    case 'DONE_NOT_REACHED': return 'Same target next session.'
-    case 'DONE_REACHED': return 'Target cleared. Next session moves up.'
+    case 'CALIBRATION': return lighterSessionSkipped ? t('lighterSkipped') : null
+    case 'IN_PROGRESS_NOT_REACHED': return targetAheadOfToday ? t('lighterSetsNoChange') : null
+    case 'IN_PROGRESS_REACHED': return t('clearedAdvance')
+    case 'DONE_NOT_REACHED': return t('sameNextSession')
+    case 'DONE_REACHED': return t('clearedNextSession')
   }
 }
 
@@ -65,10 +66,10 @@ export function buildCardModel(exercise: Exercise, state: ProgressionState): Car
     const targetReps = suggestion.type === 'StartTracking' ? suggestion.targetReps : exercise.preferredTargetReps
     return {
       kind: 'first',
-      headerLeft: 'FIRST SESSION',
-      headerRight: 'NEW EXERCISE',
-      targetValue: isRepsOnly ? 'As many as you can' : formatFirstSessionPlaceholder(targetReps),
-      hint: isRepsOnly ? 'Your best set today sets the target.' : 'Your heaviest set today sets the target.',
+      headerLeft: t('firstSession'),
+      headerRight: t('newExercise'),
+      targetValue: isRepsOnly ? t('asManyAsYouCan') : formatFirstSessionPlaceholder(targetReps),
+      hint: isRepsOnly ? t('bestSetDecides') : t('heaviestSetDecides'),
     }
   }
 
@@ -82,10 +83,10 @@ export function buildCardModel(exercise: Exercise, state: ProgressionState): Car
   const hasGoalDetails = goalReached && (weightGoal !== null || repsGoal !== null)
 
   let headerLeft: string
-  if (isUserDone && hasGoalDetails) headerLeft = 'SESSION DONE · GOAL REACHED'
-  else if (goalReached && weightGoal) headerLeft = `GOAL REACHED · ${formatSetCompact(weightGoal.weight, weightGoal.targetReps)}`
-  else if (goalReached && repsGoal) headerLeft = `GOAL REACHED · ${formatReps(repsGoal.cleared)}`
-  else if (isUserDone) headerLeft = 'SESSION DONE'
+  if (isUserDone && hasGoalDetails) headerLeft = t('sessionDoneGoal')
+  else if (goalReached && weightGoal) headerLeft = `${t('goalReached')} · ${formatSetCompact(weightGoal.weight, weightGoal.targetReps)}`
+  else if (goalReached && repsGoal) headerLeft = `${t('goalReached')} · ${formatReps(repsGoal.cleared)}`
+  else if (isUserDone) headerLeft = t('sessionDone')
   else headerLeft = statusText
 
   const headerRight = formatLastSessionHeader(
@@ -112,27 +113,27 @@ export function buildCardModel(exercise: Exercise, state: ProgressionState): Car
     const columns: MatrixColumn[] =
       dashboard === 'CALIBRATION'
         ? [
-            { label: 'LIGHTER', value: option(matrix[0]), primary: false },
+            { label: t('tag_lighter'), value: option(matrix[0]), primary: false },
             centerColumn,
-            { label: 'HEAVIER', value: option(matrix[2]), primary: false },
+            { label: t('tag_heavier'), value: option(matrix[2]), primary: false },
           ]
         : [
-            ...(state.backOff ? [{ label: 'BACK-OFF', value: option(state.backOff), primary: false }] : []),
+            ...(state.backOff ? [{ label: t('tag_backOff'), value: option(state.backOff), primary: false }] : []),
             centerColumn,
           ]
     body = { kind: 'matrix', caption: captionFor(dashboard, targetAheadOfToday, lighterSkipped), columns }
   } else if (goalReached && repsGoal) {
     body = {
       kind: 'repsGoal',
-      message: isUserDone ? 'Progression unlocked for next session.' : 'Target cleared. Advance, repeat, or back-off.',
-      chipLabel: isUserDone ? 'NEXT SESSION' : 'NEXT',
+      message: isUserDone ? t('unlocked') : t('clearedAdvance'),
+      chipLabel: isUserDone ? t('tag_nextSession') : t('tag_next'),
       value: formatReps(repsGoal.nextTarget),
     }
   } else if (suggestion.type === 'SingleMetric' && suggestion.reason.type !== 'FirstSession') {
     const r = suggestion.reason
-    if (r.type === 'Target') body = { kind: 'repsTarget', target: formatReps(r.target), caption: `Last session best: ${formatReps(r.lastBest)}.` }
-    else if (r.type === 'Remaining') body = { kind: 'repsTarget', target: formatReps(r.target), caption: `${formatReps(r.repsLeft)} to go.` }
-    else if (r.type === 'AtCeiling') body = { kind: 'repsTarget', target: formatReps(r.ceiling), caption: 'The target stays at the ceiling.' }
+    if (r.type === 'Target') body = { kind: 'repsTarget', target: formatReps(r.target), caption: t('lastBestCaption', { reps: formatReps(r.lastBest) }) }
+    else if (r.type === 'Remaining') body = { kind: 'repsTarget', target: formatReps(r.target), caption: t('repsToGo', { reps: formatReps(r.repsLeft) }) }
+    else if (r.type === 'AtCeiling') body = { kind: 'repsTarget', target: formatReps(r.ceiling), caption: t('ceilingStays') }
     else body = { kind: 'text', text: statusMessage }
   } else {
     body = { kind: 'text', text: statusMessage }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { allExercises, addSet, setsForExercise, setsInRange } from '../../data/repository'
 import { useDataVersion } from '../../data/events'
+import { t } from '../../domain/i18n/strings'
 import { buildCardModel, prefillFor } from '../../domain/mappers/cardModel'
 import type { Exercise, ExerciseSet, ProgressionState } from '../../domain/model/types'
 import { buildLoggedSet, progressionFor, stepScaleFor } from '../../domain/progression/exerciseProgression'
@@ -101,12 +102,12 @@ export function LogScreen() {
     if (!exercise || !state) return
     const repsInt = Number.parseInt(reps, 10)
     if (!Number.isFinite(repsInt) || repsInt <= 0) {
-      showToast('Enter the reps')
+      showToast(t('enterReps'))
       return
     }
     const weightKg = usesWeight ? parseDecimal(weight) : 0
     if (weightKg === null) {
-      showToast('Enter a valid weight')
+      showToast(t('enterValidWeight'))
       return
     }
     const timestamp = Date.now()
@@ -119,7 +120,7 @@ export function LogScreen() {
 
     await addSet(buildLoggedSet(exercise, repsInt, weightKg, timestamp, warmup, exercise.preferredTargetReps, timestamp))
     setWarmup(false)
-    if (cleared) showToast('Target cleared')
+    if (cleared) showToast(t('targetCleared'))
   }
 
   // Today's sets of this exercise, newest first, with working sets numbered in the order they were done.
@@ -136,50 +137,50 @@ export function LogScreen() {
   return (
     <div class="screen log">
       <header class="nav-bar">
-        <h1>Log a set</h1>
+        <h1>{t('logTitle')}</h1>
       </header>
 
       <button class="selector" onClick={() => setPicker(true)}>
-        <span class="selector-name">{exercise ? exercise.name : 'Select an exercise'}</span>
+        <span class="selector-name">{exercise ? exercise.name : t('selectExercise')}</span>
         <span class="chevron">›</span>
       </button>
 
       {!exercise ? (
         <div class="empty">
-          <strong>Pick an exercise</strong>
-          <p>Choose one to start logging.</p>
+          <strong>{t('pickExercise')}</strong>
+          <p>{t('chooseOne')}</p>
         </div>
       ) : null}
 
-      {exercise && !supported ? <p class="hint">Timed exercises cannot be logged in this version.</p> : null}
+      {exercise && !supported ? <p class="hint">{t('timedUnsupported')}</p> : null}
 
       {card ? <TargetCard model={card} /> : null}
 
       {exercise && supported && state ? (
         <>
-          <section class="today-strip" aria-label="Today">
+          <section class="today-strip" aria-label={t('today')}>
             <div class="today-head">
-              <span class="today-title">Today</span>
-              {resting && latest ? <span class="rest">Rest {formatRest(restMs)}</span> : null}
+              <span class="today-title">{t('today')}</span>
+              {resting && latest ? <span class="rest">{t('rest')} {formatRest(restMs)}</span> : null}
             </div>
             {numbered.length > 0 ? (
               <div class="chips-scroll">
                 {numbered.map(({ set, n }) => (
                   <button key={set.id} class={set.isWarmup ? 'set-chip warmup' : 'set-chip'} onClick={() => setEditing(set)}>
-                    <span class="chip-name">{set.isWarmup ? 'Warm-up' : `Set ${n}`}</span>
+                    <span class="chip-name">{set.isWarmup ? t('warmupShort') : t('setN', { n })}</span>
                     {formatSetChip(set)}
                   </button>
                 ))}
               </div>
             ) : (
-              <p class="today-empty">No sets yet.</p>
+              <p class="today-empty">{t('noSetsYet')}</p>
             )}
           </section>
 
           <section class="group">
             {usesWeight && scale ? (
               <FieldRow
-                label="Weight (kg)"
+                label={t('weightKg')}
                 decimal
                 value={weight}
                 onChange={setWeight}
@@ -189,18 +190,18 @@ export function LogScreen() {
               />
             ) : null}
             <FieldRow
-              label="Reps"
+              label={t('reps')}
               value={reps}
               onChange={(v) => setReps(v.replace(/\D/g, ''))}
               onMinus={() => setReps(repsMinus(reps))}
               onPlus={() => setReps(repsPlus(reps))}
               minusDisabled={reps === ''}
             />
-            <SwitchRow label="Warm-up set" checked={warmup} onChange={setWarmup} />
+            <SwitchRow label={t('warmupSet')} checked={warmup} onChange={setWarmup} />
           </section>
 
           <button class="primary-button big" onClick={() => void log()}>
-            {warmup ? 'Log warm-up' : 'Log set'}
+            {warmup ? t('logWarmup') : t('logSet')}
           </button>
         </>
       ) : null}

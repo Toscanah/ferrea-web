@@ -1,3 +1,5 @@
+import { t } from '../domain/i18n/strings'
+
 const decimalOrNumeric = (decimal?: boolean): 'decimal' | 'numeric' => (decimal ? 'decimal' : 'numeric')
 
 /** A number field with minus and plus buttons on both sides. The label is a small uppercase caption. */
@@ -15,7 +17,7 @@ export function Stepper(props: {
     <div class="stepper">
       <div class="stepper-label">{props.label}</div>
       <div class="stepper-row">
-        <button class="step-button" aria-label="Decrease" onClick={props.onMinus} disabled={props.minusDisabled}>
+        <button class="step-button" aria-label={t('decrease')} onClick={props.onMinus} disabled={props.minusDisabled}>
           −
         </button>
         <input
@@ -28,7 +30,7 @@ export function Stepper(props: {
           onInput={(e) => props.onChange((e.currentTarget as HTMLInputElement).value)}
           onFocus={(e) => (e.currentTarget as HTMLInputElement).select()}
         />
-        <button class="step-button" aria-label="Increase" onClick={props.onPlus}>
+        <button class="step-button" aria-label={t('increase')} onClick={props.onPlus}>
           +
         </button>
       </div>
@@ -51,7 +53,7 @@ export function FieldRow(props: {
     <div class="field-row">
       <span class="field-label">{props.label}</span>
       <div class="field-controls">
-        <button class="mini-step" aria-label="Decrease" onClick={props.onMinus} disabled={props.minusDisabled}>
+        <button class="mini-step" aria-label={t('decrease')} onClick={props.onMinus} disabled={props.minusDisabled}>
           −
         </button>
         <input
@@ -64,7 +66,7 @@ export function FieldRow(props: {
           onInput={(e) => props.onChange((e.currentTarget as HTMLInputElement).value)}
           onFocus={(e) => (e.currentTarget as HTMLInputElement).select()}
         />
-        <button class="mini-step" aria-label="Increase" onClick={props.onPlus}>
+        <button class="mini-step" aria-label={t('increase')} onClick={props.onPlus}>
           +
         </button>
       </div>

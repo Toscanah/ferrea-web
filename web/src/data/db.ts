@@ -8,7 +8,8 @@ interface FerreaDB extends DBSchema {
   meta: { key: string; value: unknown }
 }
 
-const SEED_VERSION = 1
+/** 2: the bundled list shrank to the fixed schedule; the old extra defaults are removed when unused. */
+const SEED_VERSION = 2
 
 let dbPromise: Promise<IDBPDatabase<FerreaDB>> | null = null
 
@@ -65,12 +66,26 @@ export function getDb(): Promise<IDBPDatabase<FerreaDB>> {
   return dbPromise
 }
 
-/** Inserts bundled exercises that are missing; never overwrites an existing one (user edits stay). */
+/**
+ * Inserts bundled exercises that are missing; never overwrites an existing one (user edits stay). Defaults from
+ * an earlier, longer list are removed only when untouched: not edited, no sets logged, and not user-added.
+ */
 async function seedIfNeeded(db: IDBPDatabase<FerreaDB>): Promise<void> {
   const seeded = await db.get('meta', 'seedVersion')
   if (seeded === SEED_VERSION) return
-  const tx = db.transaction(['exercises', 'meta'], 'readwrite')
-  for (const exercise of defaultExercises()) {
+  const bundled = defaultExercises()
+  const bundledIds = new Set(bundled.map((e) => e.id))
+  const tx = db.transaction(['exercises', 'sets', 'meta'], 'readwrite')
+  if (seeded !== undefined) {
+    const used = new Set((await tx.objectStore('sets').getAll()).map((s) => s.exerciseId))
+    for (const old of await tx.objectStore('exercises').getAll()) {
+      const wasBundledBefore = /^\d+$/.test(old.id)
+      if (wasBundledBefore && !bundledIds.has(old.id) && !old.isUserEdited && !used.has(old.id)) {
+        await tx.objectStore('exercises').delete(old.id)
+      }
+    }
+  }
+  for (const exercise of bundled) {
     if (!(await tx.objectStore('exercises').get(exercise.id))) await tx.objectStore('exercises').put(exercise)
   }
   await tx.objectStore('meta').put(SEED_VERSION, 'seedVersion')

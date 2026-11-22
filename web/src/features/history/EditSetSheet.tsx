@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks'
 import { deleteSets, restoreSets, updateSet } from '../../data/repository'
+import { t } from '../../domain/i18n/strings'
 import type { Exercise, ExerciseSet } from '../../domain/model/types'
 import { stepScaleFor } from '../../domain/progression/exerciseProgression'
 import { formatWeight } from '../../domain/progression/math'
@@ -22,12 +23,12 @@ export function EditSetSheet(props: { exercise: Exercise; set: ExerciseSet; onCl
   const save = async () => {
     const repsInt = Number.parseInt(reps, 10)
     if (!Number.isFinite(repsInt) || repsInt <= 0) {
-      showToast('Enter the reps')
+      showToast(t('enterReps'))
       return
     }
     const weightKg = usesWeight ? parseDecimal(weight) : set.weight
     if (weightKg === null) {
-      showToast('Enter a valid weight')
+      showToast(t('enterValidWeight'))
       return
     }
     await updateSet({ ...set, reps: repsInt, weight: weightKg, isWarmup: warmup })
@@ -37,15 +38,15 @@ export function EditSetSheet(props: { exercise: Exercise; set: ExerciseSet; onCl
   const remove = async () => {
     await deleteSets([set.id])
     props.onClose()
-    showToast('Set deleted', 'Undo', () => void restoreSets([set]))
+    showToast(t('setDeleted'), t('undo'), () => void restoreSets([set]))
   }
 
   return (
     <Sheet title={exercise.name} onClose={props.onClose}>
-      <p class="sub">Logged at {formatClock(set.timestamp)}.</p>
+      <p class="sub">{t('loggedAt', { time: formatClock(set.timestamp) })}</p>
       {usesWeight ? (
         <Stepper
-          label="Weight (kg)"
+          label={t('weightKg')}
           decimal
           value={weight}
           onChange={setWeight}
@@ -55,7 +56,7 @@ export function EditSetSheet(props: { exercise: Exercise; set: ExerciseSet; onCl
         />
       ) : null}
       <Stepper
-        label="Reps"
+        label={t('reps')}
         value={reps}
         onChange={(v) => setReps(v.replace(/\D/g, ''))}
         onMinus={() => setReps(repsMinus(reps))}
@@ -64,13 +65,13 @@ export function EditSetSheet(props: { exercise: Exercise; set: ExerciseSet; onCl
       />
       <label class="check warm">
         <input type="checkbox" checked={warmup} onChange={(e) => setWarmup((e.currentTarget as HTMLInputElement).checked)} />
-        <span>Warm-up set</span>
+        <span>{t('warmupSet')}</span>
       </label>
       <button class="primary-button" onClick={() => void save()}>
-        Save
+        {t('save')}
       </button>
       <button class="danger-button" onClick={() => void remove()}>
-        Delete this set
+        {t('deleteSet')}
       </button>
     </Sheet>
   )

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
+import { setLocale } from '../src/domain/i18n/strings'
 import { toDisplayMessage } from '../src/domain/mappers/progressionText'
 import type { ProgressionState } from '../src/domain/model/types'
 import { calculateRepsOnlyProgression } from '../src/domain/progression/singleMetricEngine'
@@ -8,6 +9,9 @@ import { calculateProgression } from '../src/domain/progression/workoutEngine'
 
 // shared/golden/progression.json is written by the Kotlin GoldenFixtureTest from the real Android engines.
 // Every case must come out identical here: this is what "1 to 1" means.
+// The golden texts are the Android app's English ones.
+beforeAll(() => setLocale('en'))
+
 interface GoldenCase {
   name: string
   mode: 'WEIGHT_REPS' | 'REPS_ONLY'

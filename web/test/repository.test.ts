@@ -1,6 +1,8 @@
 import 'fake-indexeddb/auto'
+import { openDB } from 'idb'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { resetDbForTests, defaultExercises } from '../src/data/db'
+import { bench } from './fixtures'
 import {
   addExercise,
   addSet,
@@ -16,7 +18,6 @@ import {
 } from '../src/data/repository'
 import { buildLoggedSet } from '../src/domain/progression/exerciseProgression'
 
-const bench = defaultExercises().find((e) => e.name === 'Barbell Bench Press')!
 
 async function freshDb(): Promise<void> {
   await resetDbForTests()
@@ -30,9 +31,10 @@ async function freshDb(): Promise<void> {
 describe('the local database', () => {
   beforeEach(freshDb)
 
-  it('starts with the bundled exercises and no timed holds', async () => {
+  it('starts with the bundled schedule and no timed holds', async () => {
     const list = await listExercises()
-    expect(list.length).toBe(62)
+    expect(list.length).toBe(defaultExercises().length)
+    expect(list.length).toBe(22)
     expect(list.some((e) => e.progressionMode === 'TIMED')).toBe(false)
   })
 
@@ -74,5 +76,32 @@ describe('the local database', () => {
     const sets = await allSets()
     expect(sets).toHaveLength(2)
     expect(sets.map((s) => s.weight).sort()).toEqual([40, 42.5])
+  })
+
+  it('drops the old longer default list when untouched, keeping used and edited ones', async () => {
+    // A database as the first release left it: seed version 1, with extra defaults.
+    const old = await openDB('ferrea', 1, {
+      upgrade(database) {
+        database.createObjectStore('exercises', { keyPath: 'id' })
+        const sets = database.createObjectStore('sets', { keyPath: 'id', autoIncrement: true })
+        sets.createIndex('byExercise', 'exerciseId')
+        sets.createIndex('byTime', 'timestamp')
+        database.createObjectStore('meta')
+      },
+    })
+    await old.put('exercises', { ...bench, id: '900' })
+    await old.put('exercises', { ...bench, id: '901' })
+    await old.put('exercises', { ...bench, id: '902', isUserEdited: true })
+    await old.put('exercises', { ...bench, id: 'uabc' })
+    await old.add('sets', buildLoggedSet({ ...bench, id: '901' }, 8, 60, 1000, false, 8, 1000))
+    await old.put('meta', 1, 'seedVersion')
+    old.close()
+
+    const ids = new Set((await allExercises()).map((e) => e.id))
+    expect(ids.has('900')).toBe(false) // unused default: removed
+    expect(ids.has('901')).toBe(true) // has a set
+    expect(ids.has('902')).toBe(true) // edited
+    expect(ids.has('uabc')).toBe(true) // user-added
+    expect(ids.has('1')).toBe(true) // in the new list
   })
 })

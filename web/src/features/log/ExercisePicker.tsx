@@ -1,16 +1,16 @@
 import { useMemo, useState } from 'preact/hooks'
+import { count, t, type StringKey } from '../../domain/i18n/strings'
 import type { Category, Exercise } from '../../domain/model/types'
 import { matchesSearch } from '../../domain/search/exerciseSearch'
 import { addExercise } from '../../data/repository'
 import { Sheet } from '../../ui/sheet'
 
 const CATEGORY_ORDER: Category[] = ['CHEST', 'BACK', 'LEGS', 'SHOULDERS', 'ARMS', 'CORE', 'OTHER']
-const label = (c: Category): string => c.charAt(0) + c.slice(1).toLowerCase()
+const label = (c: Category): string => t(`cat_${c}` as StringKey)
 
 function subtitle(e: Exercise): string {
-  if (e.progressionMode === 'REPS_ONLY') return 'Reps only'
-  const equipment = e.equipment === 'EZ_BAR' ? 'EZ bar' : label(e.equipment.replace('_', ' ') as Category)
-  return `${equipment} · ${e.preferredTargetReps} reps`
+  if (e.progressionMode === 'REPS_ONLY') return t('repsOnly')
+  return `${t(`eq_${e.equipment}` as StringKey)} · ${count(e.preferredTargetReps, 'rep')}`
 }
 
 /** Pick an exercise from the list, or add one. Search forgives typos and extra spaces. */
@@ -31,18 +31,18 @@ export function ExercisePicker(props: { exercises: Exercise[]; onPick: (exercise
   }
 
   return (
-    <Sheet title="Select an exercise" onClose={props.onClose}>
+    <Sheet title={t('selectExercise')} onClose={props.onClose}>
       <input
         class="search"
         type="search"
-        placeholder="Search exercises"
+        placeholder={t('searchExercises')}
         value={query}
         onInput={(e) => setQuery((e.currentTarget as HTMLInputElement).value)}
       />
       {groups.length === 0 ? (
         <div class="empty">
-          <strong>No exercises found</strong>
-          <p>Try adjusting your search query.</p>
+          <strong>{t('noExercisesFound')}</strong>
+          <p>{t('adjustSearch')}</p>
         </div>
       ) : null}
       {groups.map((g) => (
@@ -59,7 +59,7 @@ export function ExercisePicker(props: { exercises: Exercise[]; onPick: (exercise
         </div>
       ))}
       <button class="secondary-button" onClick={() => setAdding(true)}>
-        Add exercise
+        {t('addExercise')}
       </button>
     </Sheet>
   )
@@ -75,20 +75,20 @@ function AddExerciseSheet(props: { initialName: string; onPick: (exercise: Exerc
   const save = async () => {
     const reps = Number.parseInt(targetReps, 10)
     if (name.trim() === '') {
-      setError('Enter a name')
+      setError(t('enterName'))
       return
     }
     if (!Number.isFinite(reps) || reps < 1) {
-      setError('Enter the target reps')
+      setError(t('enterTargetReps'))
       return
     }
     props.onPick(await addExercise(name, category, usesWeight, reps))
   }
 
   return (
-    <Sheet title="Add exercise" onClose={props.onClose}>
+    <Sheet title={t('addExercise')} onClose={props.onClose}>
       <label class="field">
-        <span>Name</span>
+        <span>{t('name')}</span>
         <input
           type="text"
           value={name}
@@ -98,16 +98,16 @@ function AddExerciseSheet(props: { initialName: string; onPick: (exercise: Exerc
           }}
         />
       </label>
-      <div class="segmented" role="group" aria-label="Progression">
+      <div class="segmented" role="group" aria-label={t('weightAndReps')}>
         <button class={usesWeight ? 'on' : ''} onClick={() => setUsesWeight(true)}>
-          Weight &amp; reps
+          {t('weightAndReps')}
         </button>
         <button class={usesWeight ? '' : 'on'} onClick={() => setUsesWeight(false)}>
-          Reps only
+          {t('repsOnly')}
         </button>
       </div>
       <label class="field">
-        <span>Category</span>
+        <span>{t('category')}</span>
         <select value={category} onChange={(e) => setCategory((e.currentTarget as HTMLSelectElement).value as Category)}>
           {CATEGORY_ORDER.map((c) => (
             <option value={c} key={c}>
@@ -117,7 +117,7 @@ function AddExerciseSheet(props: { initialName: string; onPick: (exercise: Exerc
         </select>
       </label>
       <label class="field">
-        <span>Target reps</span>
+        <span>{t('targetReps')}</span>
         <input
           type="text"
           inputMode="numeric"
@@ -130,7 +130,7 @@ function AddExerciseSheet(props: { initialName: string; onPick: (exercise: Exerc
       </label>
       {error ? <p class="error">{error}</p> : null}
       <button class="primary-button" onClick={() => void save()}>
-        Save
+        {t('save')}
       </button>
     </Sheet>
   )
