@@ -40,6 +40,8 @@ function countLighterSessions(
   return 0
 }
 
+const sameWeight = (a: number, b: number): boolean => Math.abs(f(a - b)) <= EngineDefaults.WEIGHT_EPSILON
+
 function generateSuggestion(
   category: ProgressionCategory,
   isOvershoot: boolean,
@@ -60,14 +62,14 @@ function generateSuggestion(
       let reason: VolumeReason
       if (isOvershoot) {
         reason = { type: 'Overshoot', targetReps, nextWeight }
-      } else if (todayWeight > nextWeight) {
+      } else if (todayWeight > f(nextWeight + EngineDefaults.WEIGHT_EPSILON)) {
         // A heavier set with too few reps to count: the target is unchanged.
         reason = { type: 'StandardTarget', targetReps, nextWeight }
-      } else if (todayWeight > 0 && todayWeight >= nextWeight && todayMaxReps < targetReps) {
+      } else if (todayWeight > 0 && todayWeight >= f(nextWeight - EngineDefaults.WEIGHT_EPSILON) && todayMaxReps < targetReps) {
         reason = { type: 'RepsRemaining', repsLeft: targetReps - todayMaxReps, targetReps, weight: todayWeight }
-      } else if (todayWeight === 0 && refWeight === nextWeight && refReps >= 1 && refReps < targetReps) {
+      } else if (todayWeight === 0 && sameWeight(refWeight, nextWeight) && refReps >= 1 && refReps < targetReps) {
         reason = { type: 'RepsRemaining', repsLeft: targetReps - refReps, targetReps, weight: refWeight }
-      } else if (todayWeight > 0 && todayWeight === refWeight && todayMaxReps < refReps) {
+      } else if (todayWeight > 0 && sameWeight(todayWeight, refWeight) && todayMaxReps < refReps) {
         reason = { type: 'ShortOnReps', repsShort: refReps - todayMaxReps, targetReps, nextWeight }
       } else {
         reason = { type: 'StandardTarget', targetReps, nextWeight }
@@ -108,10 +110,26 @@ export function calculateProgression(
     return maxWith(working.length > 0 ? working : session, byWeightThenReps)
   }
 
-  const skipped = countLighterSessions(completed, relativeTime, topSetOf)
-  const referenceSets = completed[skipped] ?? []
+  // A session with no working set whose heaviest set is above the last session that had one (a max test of
+  // heavy singles) says nothing about the working weight, so it is not used as the reference. A bad day at or
+  // below that weight still counts: it keeps the target where it is.
+  let lastWorkingWeight: number | null = null
+  const usable = [...completed]
+    .reverse()
+    .filter((session) => {
+      const working = session.filter((s) => s.reps >= floor)
+      if (working.length > 0) {
+        lastWorkingWeight = Math.max(...working.map((s) => s.weight))
+        return true
+      }
+      return lastWorkingWeight === null || Math.max(...session.map((s) => s.weight)) <= f(lastWorkingWeight + EngineDefaults.WEIGHT_EPSILON)
+    })
+    .reverse()
+
+  const skipped = countLighterSessions(usable, relativeTime, topSetOf)
+  const referenceSets = usable[skipped] ?? []
   const lighterSession: TargetOption | null =
-    skipped > 0 ? (() => { const t = topSetOf(completed[0]); return t ? { weight: t.weight, reps: t.reps } : null })() : null
+    skipped > 0 ? (() => { const t = topSetOf(usable[0]); return t ? { weight: t.weight, reps: t.reps } : null })() : null
 
   // 3. The best performances.
   const refBest = topSetOf(referenceSets)
@@ -135,7 +153,7 @@ export function calculateProgression(
   const thresholdWeightForCheck = refWeight === 0 ? todayWeight : baseNextWeight
 
   const todayGoalClearedSet = maxWith(
-    todaySets.filter((s) => s.reps >= targetReps && s.weight >= thresholdWeightForCheck),
+    todaySets.filter((s) => s.reps >= targetReps && s.weight >= f(thresholdWeightForCheck - EngineDefaults.WEIGHT_EPSILON)),
     byWeightThenReps,
   )
   const hitGoalToday = isSessionActive && todayGoalClearedSet !== undefined && todayGoalClearedSet.weight > 0
@@ -145,7 +163,7 @@ export function calculateProgression(
   const todayTopSet = topSetOf(todaySets)
   const heavierSetCounts =
     isSessionActive && !hitGoalToday && refWeight > 0 && todayTopSet !== undefined &&
-    todayTopSet.weight > thresholdWeightForCheck && todayTopSet.reps >= floor
+    todayTopSet.weight > f(thresholdWeightForCheck + EngineDefaults.WEIGHT_EPSILON) && todayTopSet.reps >= floor
 
   const effectiveNextWeight =
     hitGoalToday && activeGoalWeight > 0 ? next(stepScale, activeGoalWeight)
@@ -160,11 +178,11 @@ export function calculateProgression(
     : 'BUILD_VOLUME'
 
   const repsAtNextWeight = isSessionActive
-    ? Math.max(0, ...todaySets.filter((s) => s.weight >= effectiveNextWeight).map((s) => s.reps))
+    ? Math.max(0, ...todaySets.filter((s) => s.weight >= f(effectiveNextWeight - EngineDefaults.WEIGHT_EPSILON)).map((s) => s.reps))
     : 0
 
   let staleSessionsCount = 0
-  for (const session of completed.slice(skipped)) {
+  for (const session of usable.slice(skipped)) {
     const best = topSetOf(session)
     if (best !== undefined && best.reps < targetReps) staleSessionsCount++
     else break

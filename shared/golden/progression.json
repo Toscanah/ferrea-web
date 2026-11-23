@@ -2231,7 +2231,7 @@
                 "previousReps": 5,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 2,
+                "staleSessionsCount": 1,
                 "targetMatrix": [
                     {
                         "weight": 77.5,
@@ -9207,31 +9207,27 @@
                 }
             ],
             "expected": {
-                "category": "BUILD_VOLUME",
+                "category": "READY_TO_OVERLOAD",
                 "nextWeight": 57.5,
                 "backOff": null,
                 "suggestion": {
-                    "type": "BuildVolume",
-                    "lighterSessionSkipped": false,
-                    "reason": {
-                        "type": "RepsRemaining",
-                        "repsLeft": 6,
-                        "targetReps": 10,
-                        "weight": 57.5
-                    }
+                    "type": "OverloadReady",
+                    "targetReps": 10,
+                    "nextWeight": 57.5,
+                    "lighterSessionSkipped": false
                 },
                 "repsAtNextWeight": 0,
                 "daysCount": 6,
                 "setsToday": 0,
                 "sessionLastWeight": 0.0,
                 "sessionLastReps": 0,
-                "latestWeight": 57.5,
-                "latestReps": 4,
-                "previousWeight": 57.5,
-                "previousReps": 4,
+                "latestWeight": 55.0,
+                "latestReps": 12,
+                "previousWeight": 55.0,
+                "previousReps": 12,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 1,
+                "staleSessionsCount": 0,
                 "targetMatrix": [
                     {
                         "weight": 55.0,
@@ -9246,8 +9242,8 @@
                         "reps": 9
                     }
                 ],
-                "displayLabel": "SAME TARGET",
-                "displayMessage": "Best: 57.5kg × 4 · Target: 10 reps (6 remaining)"
+                "displayLabel": "NEW TARGET",
+                "displayMessage": "Target: 57.5kg × 10"
             }
         },
         {
@@ -11035,47 +11031,43 @@
                 }
             ],
             "expected": {
-                "category": "BUILD_VOLUME",
-                "nextWeight": 44.0,
+                "category": "READY_TO_OVERLOAD",
+                "nextWeight": 28.0,
                 "backOff": null,
                 "suggestion": {
-                    "type": "BuildVolume",
-                    "lighterSessionSkipped": false,
-                    "reason": {
-                        "type": "RepsRemaining",
-                        "repsLeft": 5,
-                        "targetReps": 6,
-                        "weight": 44.0
-                    }
+                    "type": "OverloadReady",
+                    "targetReps": 6,
+                    "nextWeight": 28.0,
+                    "lighterSessionSkipped": false
                 },
                 "repsAtNextWeight": 0,
                 "daysCount": 6,
                 "setsToday": 0,
                 "sessionLastWeight": 0.0,
                 "sessionLastReps": 0,
-                "latestWeight": 44.0,
-                "latestReps": 1,
-                "previousWeight": 44.0,
-                "previousReps": 1,
+                "latestWeight": 26.0,
+                "latestReps": 7,
+                "previousWeight": 26.0,
+                "previousReps": 7,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 1,
+                "staleSessionsCount": 0,
                 "targetMatrix": [
                     {
-                        "weight": 42.0,
-                        "reps": 8
+                        "weight": 26.0,
+                        "reps": 9
                     },
                     {
-                        "weight": 44.0,
+                        "weight": 28.0,
                         "reps": 6
                     },
                     {
-                        "weight": 46.0,
-                        "reps": 6
+                        "weight": 30.0,
+                        "reps": 5
                     }
                 ],
-                "displayLabel": "SAME TARGET",
-                "displayMessage": "Best: 44kg × 1 · Target: 6 reps (5 remaining)"
+                "displayLabel": "NEW TARGET",
+                "displayMessage": "Target: 28kg × 6"
             }
         },
         {
@@ -14743,7 +14735,7 @@
                 "previousReps": 9,
                 "previousSessionSetCount": 5,
                 "lighterSession": null,
-                "staleSessionsCount": 2,
+                "staleSessionsCount": 1,
                 "targetMatrix": [
                     {
                         "weight": 52.0,
@@ -18676,11 +18668,11 @@
                 "sessionLastReps": 6,
                 "latestWeight": 60.0,
                 "latestReps": 7,
-                "previousWeight": 60.0,
-                "previousReps": 2,
+                "previousWeight": 35.0,
+                "previousReps": 8,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 1,
+                "staleSessionsCount": 0,
                 "targetMatrix": [
                     {
                         "weight": 60.0,
@@ -27690,16 +27682,16 @@
             ],
             "expected": {
                 "category": "BUILD_VOLUME",
-                "nextWeight": 30.0,
+                "nextWeight": 26.0,
                 "backOff": null,
                 "suggestion": {
                     "type": "BuildVolume",
                     "lighterSessionSkipped": false,
                     "reason": {
                         "type": "RepsRemaining",
-                        "repsLeft": 11,
+                        "repsLeft": 5,
                         "targetReps": 12,
-                        "weight": 30.0
+                        "weight": 26.0
                     }
                 },
                 "repsAtNextWeight": 0,
@@ -27707,29 +27699,29 @@
                 "setsToday": 0,
                 "sessionLastWeight": 0.0,
                 "sessionLastReps": 0,
-                "latestWeight": 30.0,
-                "latestReps": 1,
-                "previousWeight": 30.0,
-                "previousReps": 1,
+                "latestWeight": 26.0,
+                "latestReps": 7,
+                "previousWeight": 26.0,
+                "previousReps": 7,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 3,
+                "staleSessionsCount": 2,
                 "targetMatrix": [
                     {
-                        "weight": 28.0,
+                        "weight": 24.0,
                         "reps": 13
                     },
                     {
-                        "weight": 30.0,
+                        "weight": 26.0,
                         "reps": 12
                     },
                     {
-                        "weight": 32.0,
-                        "reps": 10
+                        "weight": 28.0,
+                        "reps": 9
                     }
                 ],
                 "displayLabel": "SAME TARGET",
-                "displayMessage": "Best: 30kg × 1 · Target: 12 reps (11 remaining)"
+                "displayMessage": "Best: 26kg × 7 · Target: 12 reps (5 remaining)"
             }
         },
         {
@@ -32944,47 +32936,43 @@
                 }
             ],
             "expected": {
-                "category": "BUILD_VOLUME",
-                "nextWeight": 40.0,
+                "category": "READY_TO_OVERLOAD",
+                "nextWeight": 35.0,
                 "backOff": null,
                 "suggestion": {
-                    "type": "BuildVolume",
-                    "lighterSessionSkipped": false,
-                    "reason": {
-                        "type": "RepsRemaining",
-                        "repsLeft": 9,
-                        "targetReps": 10,
-                        "weight": 40.0
-                    }
+                    "type": "OverloadReady",
+                    "targetReps": 10,
+                    "nextWeight": 35.0,
+                    "lighterSessionSkipped": false
                 },
                 "repsAtNextWeight": 0,
                 "daysCount": 5,
                 "setsToday": 0,
                 "sessionLastWeight": 0.0,
                 "sessionLastReps": 0,
-                "latestWeight": 40.0,
-                "latestReps": 1,
-                "previousWeight": 40.0,
-                "previousReps": 1,
+                "latestWeight": 30.0,
+                "latestReps": 11,
+                "previousWeight": 30.0,
+                "previousReps": 11,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 1,
+                "staleSessionsCount": 0,
                 "targetMatrix": [
                     {
-                        "weight": 35.0,
-                        "reps": 13
+                        "weight": 30.0,
+                        "reps": 14
                     },
                     {
-                        "weight": 40.0,
+                        "weight": 35.0,
                         "reps": 10
                     },
                     {
-                        "weight": 45.0,
-                        "reps": 7
+                        "weight": 40.0,
+                        "reps": 6
                     }
                 ],
-                "displayLabel": "SAME TARGET",
-                "displayMessage": "Best: 40kg × 1 · Target: 10 reps (9 remaining)"
+                "displayLabel": "NEW TARGET",
+                "displayMessage": "Target: 35kg × 10"
             }
         },
         {
@@ -38599,31 +38587,27 @@
                 }
             ],
             "expected": {
-                "category": "BUILD_VOLUME",
+                "category": "READY_TO_OVERLOAD",
                 "nextWeight": 24.0,
                 "backOff": null,
                 "suggestion": {
-                    "type": "BuildVolume",
-                    "lighterSessionSkipped": false,
-                    "reason": {
-                        "type": "RepsRemaining",
-                        "repsLeft": 6,
-                        "targetReps": 10,
-                        "weight": 24.0
-                    }
+                    "type": "OverloadReady",
+                    "targetReps": 10,
+                    "nextWeight": 24.0,
+                    "lighterSessionSkipped": false
                 },
                 "repsAtNextWeight": 0,
                 "daysCount": 2,
                 "setsToday": 0,
                 "sessionLastWeight": 0.0,
                 "sessionLastReps": 0,
-                "latestWeight": 24.0,
-                "latestReps": 4,
-                "previousWeight": 24.0,
-                "previousReps": 4,
+                "latestWeight": 22.0,
+                "latestReps": 12,
+                "previousWeight": 22.0,
+                "previousReps": 12,
                 "previousSessionSetCount": 1,
                 "lighterSession": null,
-                "staleSessionsCount": 1,
+                "staleSessionsCount": 0,
                 "targetMatrix": [
                     {
                         "weight": 22.0,
@@ -38638,8 +38622,8 @@
                         "reps": 8
                     }
                 ],
-                "displayLabel": "SAME TARGET",
-                "displayMessage": "Best: 24kg × 4 · Target: 10 reps (6 remaining)"
+                "displayLabel": "NEW TARGET",
+                "displayMessage": "Target: 24kg × 10"
             }
         },
         {
