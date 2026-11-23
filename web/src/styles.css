@@ -33,6 +33,8 @@
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  /* Fast repeated taps (steppers, Log) must not zoom the page; pinch zoom still works. */
+  touch-action: manipulation;
 }
 
 html,
